@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>حجز جلسة تدقيق HSSE</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap">
+    <style>
+        :root {
+            --color-primary: #1E3A5F;
+            --color-primary-light: #2D5A8C;
+            --color-primary-dark: #0F1F36;
+            --color-secondary: #00A86B;
+            --color-accent: #D97706;
+            --color-accent-light: #F59E0B;
+            --color-success: #10B981;
+            --color-error: #EF4444;
+            --color-warning: #F59E0B;
+            --color-text-dark: #1F2937;
+            --color-text-light: #6B7280;
+            --color-border: #E5E7EB;
+            --color-bg-light: #F9FAFB;
+            --color-bg-white: #FFFFFF;
+            --color-overlay: rgba(0, 0, 0, 0.5);
+
+            --font-family-ar: 'Cairo', system-ui, sans-serif;
+            --font-family-en: 'Roboto', system-ui, sans-serif;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --color-text-dark: #F3F4F6;
+                --color-text-light: #D1D5DB;
+                --color-border: #374151;
+                --color-bg-light: #111827;
+                --color-bg-white: #1F2937;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --color-text-dark: #F3F4F6;
+            --color-text-light: #D1D5DB;
+            --color-border: #374151;
+            --color-bg-light: #111827;
+            --color-bg-white: #1F2937;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-family-ar);
+            color: var(--color-text-dark);
+            background-color: var(--color-bg-light);
+            margin: 0;
+            padding: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-lg);
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        .header h1 {
+            margin: 0 0 var(--spacing-sm) 0;
+            color: var(--color-primary);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: var(--color-text-light);
+            margin: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: var(--spacing-sm);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        @media (min-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--color-bg-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card h2 {
+            margin: 0 0 var(--spacing-md) 0;
+            color: var(--color-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            color: var(--color-text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .required {
+            color: var(--color-error);
+        }
+
+        .input-field,
+        .select-field,
+        textarea {
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-family: var(--font-family-ar);
+            font-size: 1rem;
+            background-color: var(--color-bg-white);
+            color: var(--color-text-dark);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-field:focus,
+        .select-field:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .calendar-container {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .calendar thead th {
+            background-color: var(--color-primary);
+            color: white;
+            padding: var(--spacing-sm);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .calendar tbody td {
+            width: 14.28%;
+            aspect-ratio: 1;
+            padding: 0;
+            border: 1px solid var(--color-border);
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .calendar-day {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--color-bg-white);
+            color: var(--color-text-dark);
+            font-weight: 500;
+        }
+
+        .calendar-day:hover {
+            background-color: var(--color-bg-light);
+        }
+
+        .calendar-day.available {
+            background-color: var(--color-bg-light);
+            cursor: pointer;
+        }
+
+        .calendar-day.available:hover {
+            background-color: var(--color-primary-light);
+            color: white;
+        }
+
+        .calendar-day.selected {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .calendar-day.disabled {
+            color: var(--color-text-light);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .time-slot {
+            padding: var(--spacing-sm);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--color-bg-white);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .time-slot:hover {
+            border-color: var(--color-primary);
+            background-color: var(--color-bg-light);
+        }
+
+        .time-slot.selected {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .time-slot.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+            background-color: var(--color-bg-light);
+        }
+
+        .selection-summary {
+            background-color: var(--color-bg-light);
+            border-right: 4px solid var(--color-primary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .selection-summary p {
+            margin: 0 0 var(--spacing-xs) 0;
+            color: var(--color-text-light);
+            font-size: 0.9rem;
+        }
+
+        .selection-summary strong {
+            color: var(--color-primary);
+            font-size: 1.1rem;
+        }
+
+        .button {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--font-family-ar);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .button-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background-color: var(--color-primary-dark);
+            box-shadow: var(--shadow-md);
+        }
+
+        .button-primary:disabled {
+            background-color: var(--color-text-light);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .button-secondary {
+            background-color: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+
+        .button-secondary:hover {
+            background-color: var(--color-bg-light);
+        }
+
+        .button-success {
+            background-color: var(--color-success);
+            color: white;
+        }
+
+        .button-success:hover {
+            background-color: #059669;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--color-overlay);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background-color: var(--color-bg-white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal h2 {
+            margin-top: 0;
+            color: var(--color-primary);
+        }
+
+        .confirmation-details {
+            background-color: var(--color-bg-light);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-xs) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--color-text-light);
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: var(--color-text-dark);
+            font-weight: 600;
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--spacing-md);
+            background-color: var(--color-success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+        }
+
+        .modal-buttons button {
+            flex: 1;
+        }
+
+        .error-message {
+            background-color: var(--color-error);
+            color: white;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .field-error {
+            color: var(--color-error);
+            font-size: 0.85rem;
+            margin-top: var(--spacing-xs);
+            display: none;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        .section-title {
+            color: var(--color-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .email-pair {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+        }
+
+        @media (min-width: 768px) {
+            .email-pair {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .calendar-nav button {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: var(--font-family-ar);
+            font-weight: 600;
+        }
+
+        .calendar-nav button:hover {
+            background-color: var(--color-primary-dark);
+        }
+
+        .calendar-month-year {
+            font-weight: 600;
+            color: var(--color-primary);
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-lg);
+            color: var(--color-text-light);
+        }
+
+        .info-box {
+            background-color: var(--color-bg-light);
+            border-right: 4px solid var(--color-accent);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+            font-size: 0.9rem;
+        }
+
+        .calendar-export-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        @media (max-width: 767px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: var(--spacing-md);
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ حجز جلسة تدقيق ومراجعة HSSE</h1>
+            <p>قم بحجز جلسة تدقيق شاملة للصحة والسلامة والأمن والبيئة مع فريقنا المتخصص</p>
+            <span class="badge">المدة المتوقعة: 60 دقيقة</span>
+        </div>
+
+        <div class="main-content">
+            <!-- القسم الأول: اختيار التاريخ والوقت -->
+            <div class="card form-section active" id="dateTimeSection">
+                <h2>1️⃣ اختر التاريخ والوقت</h2>
+
+                <div class="info-box">
+                    <strong>⏰ أيام العمل المتاحة:</strong> الأحد إلى الخميس | <strong>الساعات:</strong> 09:00 صباحاً - 02:00 ظهراً
+                </div>
+
+                <div class="calendar-container">
+                    <div class="calendar-nav">
+                        <button id="prevMonthBtn">السابق</button>
+                        <div class="calendar-month-year" id="monthYear"></div>
+                        <button id="nextMonthBtn">التالي</button>
+                    </div>
+                    <table class="calendar" id="calendar">
+                        <thead>
+                            <tr>
+                                <th>السبت</th>
+                                <th>الجمعة</th>
+                                <th>الخميس</th>
+                                <th>الأربعاء</th>
+                                <th>الثلاثاء</th>
+                                <th>الاثنين</th>
+                                <th>الأحد</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendarBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="timeSlotContainer" style="display: none;">
+                    <h3 style="margin-top: var(--spacing-lg); color: var(--color-primary);">اختر الوقت</h3>
+                    <div class="time-slots" id="timeSlots"></div>
+                </div>
+
+                <div id="selectedDateTime" class="selection-summary hidden">
+                    <p>التاريخ والوقت المختار:</p>
+                    <strong id="selectedDateTimeText"></strong>
+                </div>
+            </div>
+
+            <!-- القسم الثاني: بيانات الجهة -->
+            <div class="card form-section" id="formSection">
+                <h2>2️⃣ بيانات الجهة والممثلين</h2>
+
+                <div class="error-message" id="errorMessage"></div>
+
+                <form id="bookingForm">
+                    <div class="section-title">بيانات الجهة</div>
+
+                    <div class="form-group">
+                        <label for="organizationName">
+                            اسم الجهة / الشركة / المشروع
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" id="organizationName" class="input-field" placeholder="أدخل اسم الجهة الكاملة" required>
+                        <div class="field-error" id="error-organizationName"></div>
+                    </div>
+
+                    <div class="section-title">بيانات ممثل الجهة</div>
+
+                    <div class="form-group">
+                        <label for="representativeName">
+                            اسم ممثل الجهة كاملاً
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" id="representativeName" class="input-field" placeholder="اسم ممثل الجهة" required>
+                        <div class="field-error" id="error-representativeName"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jobTitle">
+                            المسمى الوظيفي
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" id="jobTitle" class="input-field" placeholder="مثال: مدير العمليات" required>
+                        <div class="field-error" id="error-jobTitle"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">
+                            رقم الجوال / التواصل
+                            <span class="required">*</span>
+                        </label>
+                        <input type="tel" id="phone" class="input-field" placeholder="رقم الجوال" required>
+                        <div class="field-error" id="error-phone"></div>
+                    </div>
+
+                    <div class="section-title">البيانات البريدية</div>
+
+                    <div class="email-pair">
+                        <div class="form-group">
+                            <label for="projectEmail">
+                                بريد ممثل المشروع
+                                <span class="required">*</span>
+                            </label>
+                            <input type="email" id="projectEmail" class="input-field" placeholder="project@example.com" required>
+                            <div class="field-error" id="error-projectEmail"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hsseEmail">
+                                بريد ممثل السلامة (HSE)
+                                <span class="required">*</span>
+                            </label>
+                            <input type="email" id="hsseEmail" class="input-field" placeholder="hse@example.com" required>
+                            <div class="field-error" id="error-hsseEmail"></div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">ملاحظات إضافية</div>
+
+                    <div class="form-group">
+                        <label for="scope">
+                            النطاق المطلوب تدقيقه / ملاحظات أولية
+                            <span style="color: var(--color-text-light);">(اختياري)</span>
+                        </label>
+                        <textarea id="scope" class="input-field" placeholder="حدد النطاقات المراد تدقيقها أو أي ملاحظات مهمة..."></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm); margin-top: var(--spacing-lg);">
+                        <button type="button" class="button button-secondary" id="backBtn">رجوع</button>
+                        <button type="button" class="button button-primary" id="confirmBtn">تأكيد الحجز</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal للتأكيد النهائي -->
+    <div class="modal-overlay" id="confirmationModal">
+        <div class="modal">
+            <h2>📋 تأكيد بيانات الحجز</h2>
+            <div class="confirmation-details" id="confirmationDetails"></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);">
+                <button type="button" class="button button-secondary" id="editBtn">تعديل</button>
+                <button type="button" class="button button-primary" id="submitBtn">إرسال الحجز</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal للنجاح -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="success-icon">✓</div>
+            <h2 style="text-align: center;">تم الحجز بنجاح! ✅</h2>
+            <p style="text-align: center; color: var(--color-text-light);">
+                تم إرسال تأكيد الموعد إلى البريد الإلكتروني لممثل المشروع وممثل السلامة
+            </p>
+            <div class="confirmation-details" id="successDetails"></div>
+            <div class="calendar-export-options">
+                <button type="button" class="button button-primary" id="downloadIcsBtn">
+                    📅 تحميل ملف التقويم (.ics)
+                </button>
+                <button type="button" class="button button-secondary" id="addGoogleCalendarBtn">
+                    📅 إضافة إلى Google Calendar
+                </button>
+            </div>
+            <button type="button" class="button button-secondary" id="newBookingBtn" style="margin-top: var(--spacing-sm);">
+                حجز جديد
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Configuration Variables
+        const CONFIG = {
+            START_DATE: new Date(2024, 9, 1),  // Oct 1, 2024
+            END_DATE: new Date(2024, 9, 31),   // Oct 31, 2024
+            WORK_DAYS: [0, 1, 2, 3, 4],  // Sunday to Thursday (0=Sunday, 6=Saturday)
+            START_HOUR: 9,
+            END_HOUR: 14,
+            SLOT_DURATION: 60  // minutes
+        };
+
+        // State
+        let state = {
+            selectedDate: null,
+            selectedTime: null,
+            formData: {}
+        };
+
+        // Days names in Arabic
+        const arabicDayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+        const arabicMonthNames = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+                                  'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+
+        let currentCalendarDate = new Date(CONFIG.START_DATE);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCalendar();
+            attachEventListeners();
+        });
+
+        function renderCalendar() {
+            const year = currentCalendarDate.getFullYear();
+            const month = currentCalendarDate.getMonth();
+
+            document.getElementById('monthYear').textContent = `${arabicMonthNames[month]} ${year}`;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const calendarBody = document.getElementById('calendarBody');
+
+            calendarBody.innerHTML = '';
+
+            let dayCounter = 1;
+            for (let i = 0; i < 6; i++) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement('td');
+
+                    if ((i === 0 && j < firstDay) || dayCounter > daysInMonth) {
+                        cell.innerHTML = '<div class="calendar-day disabled"></div>';
+                    } else {
+                        const date = new Date(year, month, dayCounter);
+                        const isAvailable = isDateAvailable(date);
+                        const isSelected = state.selectedDate &&
+                                         state.selectedDate.toDateString() === date.toDateString();
+
+                        const dayDiv = document.createElement('div');
+                        dayDiv.className = 'calendar-day';
+                        dayDiv.textContent = dayCounter;
+
+                        if (!isAvailable) {
+                            dayDiv.classList.add('disabled');
+                        } else {
+                            dayDiv.classList.add('available');
+                            if (isSelected) {
+                                dayDiv.classList.add('selected');
+                            }
+                            dayDiv.addEventListener('click', () => selectDate(date));
+                        }
+
+                        cell.appendChild(dayDiv);
+                        dayCounter++;
+                    }
+                    row.appendChild(cell);
+                }
+                calendarBody.appendChild(row);
+            }
+        }
+
+        function isDateAvailable(date) {
+            if (date < CONFIG.START_DATE || date > CONFIG.END_DATE) {
+                return false;
+            }
+            const dayOfWeek = date.getDay();
+            return CONFIG.WORK_DAYS.includes(dayOfWeek);
+        }
+
+        function selectDate(date) {
+            state.selectedDate = date;
+            renderCalendar();
+            renderTimeSlots();
+            document.getElementById('timeSlotContainer').style.display = 'block';
+        }
+
+        function renderTimeSlots() {
+            const container = document.getElementById('timeSlots');
+            container.innerHTML = '';
+
+            for (let hour = CONFIG.START_HOUR; hour < CONFIG.END_HOUR; hour++) {
+                const timeString = String(hour).padStart(2, '0') + ':00';
+                const slot = document.createElement('button');
+                slot.type = 'button';
+                slot.className = 'time-slot';
+                slot.textContent = timeString;
+
+                const isSelected = state.selectedTime === timeString;
+                if (isSelected) {
+                    slot.classList.add('selected');
+                }
+
+                slot.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    state.selectedTime = timeString;
+                    renderTimeSlots();
+                    updateSelectionSummary();
+                });
+
+                container.appendChild(slot);
+            }
+        }
+
+        function updateSelectionSummary() {
+            const summary = document.getElementById('selectedDateTime');
+            if (state.selectedDate && state.selectedTime) {
+                const dateStr = arabicDayNames[state.selectedDate.getDay()] + ' ' +
+                               state.selectedDate.getDate() + ' ' +
+                               arabicMonthNames[state.selectedDate.getMonth()];
+                document.getElementById('selectedDateTimeText').textContent =
+                    `${dateStr} - ${state.selectedTime}`;
+                summary.classList.remove('hidden');
+            } else {
+                summary.classList.add('hidden');
+            }
+        }
+
+        function attachEventListeners() {
+            document.getElementById('prevMonthBtn').addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            document.getElementById('nextMonthBtn').addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            document.getElementById('backBtn').addEventListener('click', () => {
+                switchSection('dateTimeSection');
+            });
+
+            document.getElementById('confirmBtn').addEventListener('click', () => {
+                if (validateForm()) {
+                    collectFormData();
+                    showConfirmationModal();
+                }
+            });
+
+            document.getElementById('editBtn').addEventListener('click', () => {
+                document.getElementById('confirmationModal').classList.remove('active');
+                switchSection('formSection');
+            });
+
+            document.getElementById('submitBtn').addEventListener('click', () => {
+                submitBooking();
+            });
+
+            document.getElementById('newBookingBtn').addEventListener('click', () => {
+                resetForm();
+            });
+
+            document.getElementById('downloadIcsBtn').addEventListener('click', () => {
+                downloadCalendarFile();
+            });
+
+            document.getElementById('addGoogleCalendarBtn').addEventListener('click', () => {
+                openGoogleCalendar();
+            });
+        }
+
+        function switchSection(sectionId) {
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+
+            if (sectionId === 'formSection' && state.selectedDate && state.selectedTime) {
+                updateSelectionSummary();
+            }
+        }
+
+        function validateForm() {
+            clearErrors();
+            const fields = {
+                organizationName: 'اسم الجهة',
+                representativeName: 'اسم ممثل الجهة',
+                jobTitle: 'المسمى الوظيفي',
+                phone: 'رقم الجوال',
+                projectEmail: 'بريد ممثل المشروع',
+                hsseEmail: 'بريد ممثل السلامة'
+            };
+
+            let isValid = true;
+
+            for (const [fieldId, fieldName] of Object.entries(fields)) {
+                const value = document.getElementById(fieldId).value.trim();
+                if (!value) {
+                    showFieldError(fieldId, `${fieldName} مطلوب`);
+                    isValid = false;
+                }
+            }
+
+            // Email validation
+            const emails = ['projectEmail', 'hsseEmail'];
+            emails.forEach(emailId => {
+                const email = document.getElementById(emailId).value.trim();
+                if (email && !isValidEmail(email)) {
+                    showFieldError(emailId, 'البريد الإلكتروني غير صحيح');
+                    isValid = false;
+                }
+            });
+
+            // Phone validation
+            const phone = document.getElementById('phone').value.trim();
+            if (phone && !/^\d{8,}$/.test(phone.replace(/[^\d]/g, ''))) {
+                showFieldError('phone', 'رقم الجوال يجب أن يحتوي على 8 أرقام على الأقل');
+                isValid = false;
+            }
+
+            if (!state.selectedDate || !state.selectedTime) {
+                showGeneralError('يرجى اختيار التاريخ والوقت أولاً');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showFieldError(fieldId, message) {
+            const errorElement = document.getElementById(`error-${fieldId}`);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+        }
+
+        function showGeneralError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.field-error').forEach(el => {
+                el.classList.remove('show');
+            });
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+
+        function collectFormData() {
+            state.formData = {
+                organizationName: document.getElementById('organizationName').value.trim(),
+                representativeName: document.getElementById('representativeName').value.trim(),
+                jobTitle: document.getElementById('jobTitle').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                projectEmail: document.getElementById('projectEmail').value.trim(),
+                hsseEmail: document.getElementById('hsseEmail').value.trim(),
+                scope: document.getElementById('scope').value.trim(),
+                date: state.selectedDate,
+                time: state.selectedTime
+            };
+        }
+
+        function showConfirmationModal() {
+            const modal = document.getElementById('confirmationModal');
+            const details = document.getElementById('confirmationDetails');
+            const dateStr = arabicDayNames[state.formData.date.getDay()] + ' ' +
+                           state.formData.date.getDate() + ' ' +
+                           arabicMonthNames[state.formData.date.getMonth()];
+
+            details.innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">التاريخ والوقت</span>
+                    <span class="detail-value">${dateStr} - ${state.formData.time}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">الجهة</span>
+                    <span class="detail-value">${state.formData.organizationName}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">ممثل الجهة</span>
+                    <span class="detail-value">${state.formData.representativeName}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">المسمى الوظيفي</span>
+                    <span class="detail-value">${state.formData.jobTitle}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">رقم الجوال</span>
+                    <span class="detail-value">${state.formData.phone}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">بريد المشروع</span>
+                    <span class="detail-value">${state.formData.projectEmail}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">بريد السلامة</span>
+                    <span class="detail-value">${state.formData.hsseEmail}</span>
+                </div>
+                ${state.formData.scope ? `
+                <div class="detail-row">
+                    <span class="detail-label">النطاق</span>
+                    <span class="detail-value">${state.formData.scope}</span>
+                </div>
+                ` : ''}
+            `;
+            modal.classList.add('active');
+        }
+
+        function submitBooking() {
+            // In a real application, this would send data to a backend server
+            // For now, we'll show the success modal and simulate email sending
+
+            console.log('Booking Data:', state.formData);
+
+            // Simulate sending confirmation emails
+            simulateSendEmails();
+
+            document.getElementById('confirmationModal').classList.remove('active');
+            showSuccessModal();
+        }
+
+        function simulateSendEmails() {
+            // In production, this would be handled by a backend service
+            const emailContent = generateEmailContent();
+            console.log('Email would be sent to:', state.formData.projectEmail);
+            console.log('Email would be sent to:', state.formData.hsseEmail);
+            console.log('Email content:', emailContent);
+        }
+
+        function generateEmailContent() {
+            const dateStr = arabicDayNames[state.formData.date.getDay()] + ' ' +
+                           state.formData.date.getDate() + ' ' +
+                           arabicMonthNames[state.formData.date.getMonth()];
+
+            return `
+تم تحديد موعد جلسة تدقيق HSSE
+
+التفاصيل:
+- التاريخ والوقت: ${dateStr} - ${state.formData.time}
+- الجهة: ${state.formData.organizationName}
+- ممثل الجهة: ${state.formData.representativeName}
+- المسمى الوظيفي: ${state.formData.jobTitle}
+- الاتصال: ${state.formData.phone}
+            `;
+        }
+
+        function showSuccessModal() {
+            const modal = document.getElementById('successModal');
+            const details = document.getElementById('successDetails');
+            const dateStr = arabicDayNames[state.formData.date.getDay()] + ' ' +
+                           state.formData.date.getDate() + ' ' +
+                           arabicMonthNames[state.formData.date.getMonth()];
+
+            details.innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">التاريخ والوقت</span>
+                    <span class="detail-value">${dateStr} - ${state.formData.time}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">الجهة</span>
+                    <span class="detail-value">${state.formData.organizationName}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">ممثل الجهة</span>
+                    <span class="detail-value">${state.formData.representativeName}</span>
+                </div>
+            `;
+            modal.classList.add('active');
+        }
+
+        async function downloadCalendarFile() {
+            const icsContent = generateICS();
+            const downloads = await claude?.use?.("downloads");
+
+            if (downloads) {
+                try {
+                    const dateStr = String(state.formData.date.getDate()).padStart(2, '0') +
+                                   String(state.formData.date.getMonth() + 1).padStart(2, '0') +
+                                   state.formData.date.getFullYear();
+                    await downloads.save({
+                        filename: `HSSE_Audit_${dateStr}.ics`,
+                        data: new TextEncoder().encode(icsContent)
+                    });
+                } catch (error) {
+                    console.error('Download failed:', error);
+                    fallbackDownload(icsContent);
+                }
+            } else {
+                fallbackDownload(icsContent);
+            }
+        }
+
+        function fallbackDownload(icsContent) {
+            const blob = new Blob([icsContent], { type: 'text/calendar' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `HSSE_Audit_${state.formData.date.getTime()}.ics`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function generateICS() {
+            const [hours, minutes] = state.formData.time.split(':');
+            const eventDate = new Date(state.formData.date);
+            eventDate.setHours(parseInt(hours), 0, 0);
+
+            const startTime = formatICSDate(eventDate);
+            const endTime = formatICSDate(new Date(eventDate.getTime() + 60 * 60000));
+
+            return `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//HSSE Audit Booking//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:${Math.random().toString(36).substr(2, 9)}@hsse-audit.local
+DTSTAMP:${formatICSDate(new Date())}
+DTSTART:${startTime}
+DTEND:${endTime}
+SUMMARY:جلسة تدقيق ومراجعة HSSE - ${state.formData.organizationName}
+DESCRIPTION:جلسة تدقيق الصحة والسلامة والأمن والبيئة\\nالجهة: ${state.formData.organizationName}\\nممثل الجهة: ${state.formData.representativeName}
+LOCATION:${state.formData.organizationName}
+END:VEVENT
+END:VCALENDAR`;
+        }
+
+        function formatICSDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+            return `${year}${month}${day}T${hours}${minutes}${seconds}`;
+        }
+
+        function openGoogleCalendar() {
+            const eventTitle = `جلسة تدقيق HSSE - ${state.formData.organizationName}`;
+            const eventDate = state.formData.date;
+            const [hours, minutes] = state.formData.time.split(':');
+            eventDate.setHours(parseInt(hours), parseInt(minutes));
+
+            const startTime = eventDate.toISOString().replace(/-|:|\.\d\d\dZ/g, '');
+            const endTime = new Date(eventDate.getTime() + 60 * 60000).toISOString().replace(/-|:|\.\d\d\dZ/g, '');
+
+            const googleCalendarUrl = `https://calendar.google.com/calendar/u/0/r/eventedit?text=${encodeURIComponent(eventTitle)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(state.formData.organizationName)}`;
+
+            window.open(googleCalendarUrl, '_blank');
+        }
+
+        function resetForm() {
+            state = {
+                selectedDate: null,
+                selectedTime: null,
+                formData: {}
+            };
+
+            document.getElementById('bookingForm').reset();
+            document.getElementById('successModal').classList.remove('active');
+            currentCalendarDate = new Date(CONFIG.START_DATE);
+
+            renderCalendar();
+            switchSection('dateTimeSection');
+            clearErrors();
+        }
+    </script>
+</body>
+</html>
