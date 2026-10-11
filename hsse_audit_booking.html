@@ -750,7 +750,9 @@
         let state = {
             selectedDate: null,
             selectedTime: null,
-            formData: {}
+            formData: {},
+            bookings: [],
+            db: null
         };
 
         // Days names in Arabic
@@ -761,10 +763,43 @@
         let currentCalendarDate = new Date(CONFIG.START_DATE);
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize database
+            try {
+                state.db = await claude?.use?.("db");
+                if (state.db) {
+                    await loadBookings();
+                }
+            } catch (error) {
+                console.log('Database not available, using in-memory storage');
+            }
+
             renderCalendar();
             attachEventListeners();
         });
+
+        async function loadBookings() {
+            try {
+                const result = await state.db.collection("bookings").get();
+                state.bookings = result.docs.map(doc => doc.data);
+            } catch (error) {
+                console.log('Could not load bookings:', error);
+                state.bookings = [];
+            }
+        }
+
+        function getSlotBookingCount(date, time) {
+            const dateStr = date.toISOString().split('T')[0];
+            return state.bookings.filter(booking =>
+                booking.date === dateStr && booking.time === time
+            ).length;
+        }
+
+        function isSlotAvailable(time) {
+            if (!state.selectedDate) return true;
+            const count = getSlotBookingCount(state.selectedDate, time);
+            return count < 2;
+        }
 
         function renderCalendar() {
             const year = currentCalendarDate.getFullYear();
@@ -836,22 +871,35 @@
 
             for (let hour = CONFIG.START_HOUR; hour < CONFIG.END_HOUR; hour++) {
                 const timeString = String(hour).padStart(2, '0') + ':00';
+                const bookingCount = getSlotBookingCount(state.selectedDate, timeString);
+                const available = bookingCount < 2;
+
                 const slot = document.createElement('button');
                 slot.type = 'button';
                 slot.className = 'time-slot';
-                slot.textContent = timeString;
 
-                const isSelected = state.selectedTime === timeString;
-                if (isSelected) {
-                    slot.classList.add('selected');
+                // Show time and booking status
+                const statusText = available ?
+                    `${timeString}` :
+                    '❌ مشغول';
+                slot.textContent = statusText;
+
+                if (!available) {
+                    slot.classList.add('disabled');
+                    slot.disabled = true;
+                } else {
+                    const isSelected = state.selectedTime === timeString;
+                    if (isSelected) {
+                        slot.classList.add('selected');
+                    }
+
+                    slot.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        state.selectedTime = timeString;
+                        renderTimeSlots();
+                        updateSelectionSummary();
+                    });
                 }
-
-                slot.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    state.selectedTime = timeString;
-                    renderTimeSlots();
-                    updateSelectionSummary();
-                });
 
                 container.appendChild(slot);
             }
@@ -1057,17 +1105,49 @@
             modal.classList.add('active');
         }
 
-        function submitBooking() {
-            // In a real application, this would send data to a backend server
-            // For now, we'll show the success modal and simulate email sending
+        async function submitBooking() {
+            try {
+                // Check if slot is still available before final submission
+                const bookingCount = getSlotBookingCount(state.selectedDate, state.selectedTime);
+                if (bookingCount >= 2) {
+                    showGeneralError('عذراً، هذا الموعد غير متاح حالياً. يرجى اختيار موعد آخر.');
+                    document.getElementById('confirmationModal').classList.remove('active');
+                    return;
+                }
 
-            console.log('Booking Data:', state.formData);
+                // Save booking to database
+                if (state.db) {
+                    const bookingData = {
+                        date: state.formData.date.toISOString().split('T')[0],
+                        time: state.formData.time,
+                        organizationName: state.formData.organizationName,
+                        representativeName: state.formData.representativeName,
+                        jobTitle: state.formData.jobTitle,
+                        phone: state.formData.phone,
+                        projectEmail: state.formData.projectEmail,
+                        hsseEmail: state.formData.hsseEmail,
+                        scope: state.formData.scope,
+                        bookedAt: new Date().toISOString(),
+                        id: `booking_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+                    };
 
-            // Simulate sending confirmation emails
-            simulateSendEmails();
+                    await state.db.collection("bookings").doc(bookingData.id).set(bookingData);
 
-            document.getElementById('confirmationModal').classList.remove('active');
-            showSuccessModal();
+                    // Reload bookings to update the UI
+                    await loadBookings();
+                }
+
+                console.log('Booking Data:', state.formData);
+
+                // Simulate sending confirmation emails
+                simulateSendEmails();
+
+                document.getElementById('confirmationModal').classList.remove('active');
+                showSuccessModal();
+            } catch (error) {
+                console.error('Error submitting booking:', error);
+                showGeneralError('حدث خطأ أثناء حفظ الحجز. يرجى المحاولة مرة أخرى.');
+            }
         }
 
         function simulateSendEmails() {
@@ -1202,11 +1282,14 @@ END:VCALENDAR`;
             window.open(googleCalendarUrl, '_blank');
         }
 
-        function resetForm() {
+        async function resetForm() {
+            const db = state.db;
             state = {
                 selectedDate: null,
                 selectedTime: null,
-                formData: {}
+                formData: {},
+                bookings: state.bookings,
+                db: db
             };
 
             document.getElementById('bookingForm').reset();
