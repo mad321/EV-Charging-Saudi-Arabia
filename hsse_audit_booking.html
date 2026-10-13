@@ -780,10 +780,15 @@
 
         async function loadBookings() {
             try {
-                const result = await state.db.collection("bookings").get();
-                state.bookings = result.docs.map(doc => doc.data);
+                if (!state.db) return;
+                const result = await state.db.collection("bookings").list();
+                state.bookings = result.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data
+                }));
+                console.log('Loaded bookings:', state.bookings);
             } catch (error) {
-                console.log('Could not load bookings:', error);
+                console.error('Could not load bookings:', error);
                 state.bookings = [];
             }
         }
@@ -858,8 +863,10 @@
             return CONFIG.WORK_DAYS.includes(dayOfWeek);
         }
 
-        function selectDate(date) {
+        async function selectDate(date) {
             state.selectedDate = date;
+            // Reload bookings before rendering slots to get latest data
+            await loadBookings();
             renderCalendar();
             renderTimeSlots();
             document.getElementById('timeSlotContainer').style.display = 'block';
